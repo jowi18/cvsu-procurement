@@ -56,7 +56,7 @@
           <nav class="navbar navbar-expand-lg custom_nav-container">
             <a class="navbar-brand" href="index.html">
               <span style="color: green">
-                Cavite State University - Pandak Campus
+                Cavite State University - Imus Campus
               </span>
             </a>
 
