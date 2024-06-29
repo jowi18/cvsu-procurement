@@ -9,7 +9,7 @@
     </div>
 
     <!-- Sidebar Menu -->
-    @if(Auth::user()->position_dtls->user_level == 1 || Auth::user()->position_dtls->user_level == 2)
+    @if(Auth::user()->position_dtls->user_level == 1 || Auth::user()->position_dtls->user_level == 2 || Auth::user()->position_dtls->user_level == 0)
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
@@ -29,18 +29,28 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
+                   
                     <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
-                            <a href="{{ route('requisition.index') }}" class="nav-link">
-                                <i class="fas fa-hand-holding-heart nav-icon"></i>
-                                <p>Create PR</p>
-                            </a>
-                        </li>
-
+                        @if(Auth::user()->position_dtls->user_level >= 2)
+                            <li class="nav-item">
+                                <a href="{{ route('requisition.index') }}" class="nav-link">
+                                    <i class="fas fa-hand-holding-heart nav-icon"></i>
+                                    <p>Create PR</p>
+                                </a>
+                            </li>
+                        
+                       @endif
                         <li class="nav-item">
                             <a href="{{ route('manage.purchase.request.index') }}" class="nav-link">
                                 <i class="fas fa-list-alt nav-icon"></i>
                                 <p>List of PR</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('approve.index') }}" class="nav-link">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Approve PR</p>
                             </a>
                         </li>
                     </ul>
@@ -86,7 +96,7 @@
                     <a href="#" class="nav-link">
                         <i class="fas fa-archive nav-icon"></i>
                         <p>
-                            PMPP
+                            PPMP
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -99,14 +109,22 @@
                         </li>
                     </ul>
                 </li>
-       
+                
+                <li class="nav-item">
+                    <a href="{{ route('manage.logs.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Logs
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     @endif <!-- SUPER ADMIN AND ADMIN UL 1 AND 2-->
     
     <!-- /.sidebar-menu -->
 
-@if(Auth::user()->position_dtls->user_level == 5)
+@if(Auth::user()->position_dtls->user_level >= 5)
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
@@ -140,16 +158,32 @@
                             <p>List of PR</p>
                         </a>
                     </li>
+                    {{-- @if(Auth::user()->position_dtls->user_level == 5) --}}
+                        <li class="nav-item">
+                            <a href="{{ route('approve.index') }}" class="nav-link">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Approve PR</p>
+                            </a>
+                        </li>
+                    {{-- @endif --}}
                 </ul>
             </li>
-
+            <li class="nav-item">
+                <a href="{{ route('manage.logs.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>
+                        Logs
+                    </p>
+                </a>
+            </li>
+           
             
         </ul>
     </nav>
 @endif <!-- DEPT HEAD UL 5-->
 
 
-@if(Auth::user()->position_dtls->user_level == 4)
+    @if(Auth::user()->position_dtls->user_level == 4)
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
@@ -181,6 +215,13 @@
                         <a href="{{ route('manage.purchase.request.index') }}" class="nav-link">
                             <i class="fas fa-list-alt nav-icon"></i>
                             <p>List of PR</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('approve.index') }}" class="nav-link">
+                            <i class="fas fa-list-alt nav-icon"></i>
+                            <p>Approve PR</p>
                         </a>
                     </li>
                 </ul>
@@ -190,7 +231,7 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-archive nav-icon"></i>
                     <p>
-                        PMPP
+                        PPMP
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
@@ -198,10 +239,18 @@
                     <li class="nav-item">
                         <a href="{{ route('index.pmpp') }}" class="nav-link">
                             <i class="fas fa-plus-square nav-icon"></i>
-                            <p>Create PMPP</p>
+                            <p>Create PPMP</p>
                         </a>
                     </li>
                 </ul>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('manage.logs.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>
+                        Logs
+                    </p>
+                </a>
             </li>
         </ul>
     </nav>

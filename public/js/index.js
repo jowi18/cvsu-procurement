@@ -1,23 +1,24 @@
 $(document).ready(function() {
-
-    lineChart();
     donutChart();
 });
 
 const lineChart = () => {
     console.log("chart get");
     $.ajax({
-        url: '/sample-data',
+        url: '/sample-datas',
         type: 'GET',
         success: function(data) {
+        
+            const labels = data.map(item => item.month_name);
+            const counts = data.map(item => item.request_count);
             var ctx = document.getElementById('lineChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.labels,
+                    labels: labels,
                     datasets: [{
                         label: '# of Votess',
-                        data: data.values,
+                        data: counts,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
@@ -61,19 +62,25 @@ const lineChart = () => {
 };
 
 const donutChart = () => {
+    
     console.log("chart get");
     $.ajax({
         url: '/sample-data',
         type: 'GET',
         success: function(data) {
-            var ctx = document.getElementById('donutChart').getContext('2d');
+            console.log("request_count", data[0].department_name);
+            const labels = data[0].monthly_data.map(item => item.month_name);
+            const counts = data[0].monthly_data.map(item => item.request_count);
+            $('.department').html(data[0].department_name + ' ' + "Purchase Request Report" + ' (' + data[0].year + ')');
+            // const department = 
+            var ctx = document.getElementById('barChart').getContext('2d');
             var myChart = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'bar',
                 data: {
-                    labels: data.labels,
+                    labels: labels,
                     datasets: [{
-                        label: '# of Votes',
-                        data: data.values,
+                        label: '# Request Counts',
+                        data: counts,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
@@ -97,7 +104,7 @@ const donutChart = () => {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Sample Donut Chart'
+                            text: ''
                         },
                         legend: {
                             display: true,

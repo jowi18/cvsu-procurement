@@ -17,6 +17,9 @@
     tr.borderless th{
     border: none; /* Remove border */
 }
+.page-break {
+        page-break-after: always;
+    }
 </style>
 </head>
 <body>
@@ -26,8 +29,7 @@
             <p style="margin: 0;">CAVITE STATE UNIVERSITY</p>
         </div>
     </div> --}}
-    
-
+  
     <table class="tg">
         <thead>
             <tr class="borderless">
@@ -64,6 +66,7 @@
             <td class="tg-0pky">Unit Cost</td>
             <td class="tg-0pky">Total Cost</td>
           </tr>
+        
           @foreach ($data as $items)
             <tr>
                 <td class="tg-0lax">ITEM21323</td>
@@ -73,6 +76,7 @@
                 <td class="tg-0lax">{{ $items['price'] }}</td>
                 <td class="tg-0lax">{{ $items['total'] }}</td>
             </tr>
+           
           @endforeach
           <tr>
             <td class="tg-0lax" colspan="6" style="text-align: right; font-weight: bold">TOTAL: 
@@ -89,27 +93,43 @@
             <td class="tg-0lax" colspan="6">Purpose: {{ $item['purpose'] }}</td>
           </tr>
           <tr>
-            <td class="tg-0pky" colspan="2"></td>
             <td class="tg-0pky" colspan="2" style="text-align: center">Requested By:</td>
+            <td class="tg-0pky" colspan="2" style="text-align: center">Approved By:</td>
             <td class="tg-0pky" colspan="2"></td>
           </tr>
           <tr>
-            <td class="tg-0pky" colspan="2">Signature</td>
-            <td class="tg-0pky" colspan="2"></td>
-            <td class="tg-0pky" colspan="2"></td>
+              {{-- <td class="tg-0pky" colspan="2" style="text-align: center"><img src="{{ asset('signatures/'.$item['requestor_signature']) }}" style="width: 150px; height: 60px;"></td>
+              @if($item['request_status'] == 3)
+                <td class="tg-0pky" colspan="2" style="text-align: center"><img src="{{ asset('signatures/'.$item['approver_signature']) }}" style="width: 150px; height: 60px;"></td>
+              @else
+                <td class="tg-0pky" colspan="2"></td>
+              @endif
+              <td class="tg-0pky" colspan="2" style="text-align: center"><img src="{{ asset('signatures/'.$item['dean_signature']) }}" style="width: 150px; height: 60px;"></td> --}}
+              <td class="tg-0pky" colspan="2" style="text-align: center"></td>
+              @if($item['request_status'] == 3)
+                <td class="tg-0pky" colspan="2" style="text-align: center"></td>
+              @else
+                <td class="tg-0pky" colspan="2"></td>
+              @endif
+              <td class="tg-0pky" colspan="2" style="text-align: center"></td>
+
+          
+            </tr>
+          <tr>
+           
+            <td class="tg-0pky" colspan="2" style="text-align: center">{{ $item['requestor_name'] }}</td>
+            <td class="tg-0pky" colspan="2" style="font-weight: bold; text-align: center">{{ $item['approver'] }}</td>
+            <td class="tg-0pky" colspan="2" style="text-align: center">{{ $item['dean_name'] }}</td>
           </tr>
           <tr>
-            <td class="tg-0pky" colspan="2">Printed Name</td>
-            <td class="tg-0pky" colspan="2"></td>
-            <td class="tg-0pky" colspan="2" style="font-weight: bold">HERNANDO D. ROBLES</td>
-          </tr>
-          <tr>
-            <td class="tg-0pky" colspan="2">Designation</td>
-            <td class="tg-0pky" colspan="2"></td>
-            <td class="tg-0pky" colspan="2">University President</td>
+           
+            <td class="tg-0pky" colspan="2" style="text-align: center">{{ $item['requestor_department'] }}</td>
+            <td class="tg-0pky" colspan="2" style="text-align: center">{{ $item['approver_department'] }}</td>
+            <td class="tg-0pky" colspan="2" style="text-align: center">Deans Office</td>
           </tr>
         </tbody>
         </table>
+
     
 </body>
 </html>

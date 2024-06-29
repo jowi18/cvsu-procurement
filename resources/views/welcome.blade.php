@@ -81,6 +81,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('login') }}"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
                 </li>
+               
                 <form class="form-inline">
                   {{-- <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -96,7 +97,7 @@
     <!-- slider section -->
     <section class="slider_section ">
       <div class="slider_bg_box">
-        <img src="images/slider-bg.jpg" alt="">
+        <img src="{{ asset('images/cvsu3.png') }}" alt="">
       </div>
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -106,11 +107,12 @@
                 <div class="col-md-7 ">
                   <div class="detail-box">
                     <h1>
-                      We Provide best <br>
-                      Transport Service
+                      CAVITE STATE UNIVERSITY
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum magnam, voluptates distinctio, officia architecto tenetur debitis hic aspernatur libero commodi atque fugit adipisci, blanditiis quidem dolorum odit voluptas? Voluptate, eveniet?
+                      {{-- Cavite State University shall provide excellent, equitable and relevant educational opportunities in the arts, sciences and technology 
+                      through quality instruction and responsive research and development activities. It shall produce professional, 
+                      skilled and morally upright individuals for global competitiveness. --}}
                     </p>
                     {{-- <div class="btn-box">
                       <a href="" class="btn1">
@@ -128,11 +130,11 @@
                 <div class="col-md-7 ">
                   <div class="detail-box">
                     <h1>
-                      We Provide best <br>
-                      Transport Service
+                      VISION
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum magnam, voluptates distinctio, officia architecto tenetur debitis hic aspernatur libero commodi atque fugit adipisci, blanditiis quidem dolorum odit voluptas? Voluptate, eveniet?
+                      The Premier University in historic Cavite globally recognized for excellence in character development, academics, 
+                      research, innovation and sustainable community engagement.
                     </p>
                     {{-- <div class="btn-box">
                       <a href="" class="btn1">
@@ -150,11 +152,12 @@
                 <div class="col-md-7 ">
                   <div class="detail-box">
                     <h1>
-                      We Provide best <br>
-                      Transport Service
+                      MISSION
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum magnam, voluptates distinctio, officia architecto tenetur debitis hic aspernatur libero commodi atque fugit adipisci, blanditiis quidem dolorum odit voluptas? Voluptate, eveniet?
+                      Cavite State University shall provide excellent, equitable and relevant educational opportunities in the arts, sciences and technology 
+                      through quality instruction and responsive research and development activities. It shall produce professional, 
+                      skilled and morally upright individuals for global competitiveness.
                     </p>
                     {{-- <div class="btn-box">
                       <a href="" class="btn1">

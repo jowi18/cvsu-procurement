@@ -1,5 +1,5 @@
 <div class="modal fade" id="AddCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Request Details</h1>
@@ -14,8 +14,30 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning btn-sm px-3" id="submit-category-btn">Add</button>
-                <button type="button" class="btn btn-secondary btn-sm px-3" data-dismiss="modal">Close</button>
             </div>
+            <div id="manage-category-table"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UpdateCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Details</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="update_category_form">
+                    <input type="text" class="form-control" placeholder="Item Category" id="update_category_val" name="update_category" >
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning btn-sm px-3" id="update-category-btn">Update</button>
+            </div>
+            <div id="manage-category-table"></div>
         </div>
     </div>
 </div>

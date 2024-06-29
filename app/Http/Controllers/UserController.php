@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\PurchaseRequestHeader;
 use App\Models\User;
 
 class UserController extends Controller
@@ -12,4 +12,6 @@ class UserController extends Controller
 
         return view('users.index', compact('users'));
     }
+
+  
 }

@@ -28,7 +28,9 @@ class User extends Authenticatable
         'emp_id',
         'department',
         'position',
-        'user_image'
+        'user_image',
+        'image_signature',
+        'secured_account'
     ];
 
     /**

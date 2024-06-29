@@ -47,6 +47,10 @@ const requisitionTable = () =>{
     });
 }
 
+$('.choose-approver-btn').click(function(){
+    $('#SelectApproverModal').modal('show');
+});
+
 $('#add-request-btn').click(function () {
   
     var itemNames = $('#item').val().trim();
@@ -82,9 +86,11 @@ $('#add-request-btn').click(function () {
    
 });
 
-$('#submit-request-btn').click(function () {
-    console.log("button submit");
+$(document).on('click','#submit-request-btn', function () {
+   
+    var approver_id = $('#approver').val();
     let purpose = $('#purpose').val();
+    console.log(approver_id);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -92,7 +98,7 @@ $('#submit-request-btn').click(function () {
         url: '/insert-purchase-request',
         method: 'POST',
         dataType: 'json',
-        data: { itemRequest: itemRequest,  purpose : purpose},
+        data: { itemRequest: itemRequest,  purpose : purpose, approver_id : approver_id},
         success: function (response) {
             itemRequest = [];
             requisition.setData(itemRequest);
@@ -101,6 +107,7 @@ $('#submit-request-btn').click(function () {
                 text: response.message,
                 icon: "success"
               });
+              $('#SelectApproverModal').modal('hide');
             console.log(itemRequest);
             console.log('Success:', response);
         },
@@ -139,5 +146,46 @@ var removeSelectedButton = document.getElementById("removeSelectedButton");
         item_no = 0;
     }
     
+});
+
+$('#add_item').click(function(){
+    $('#AddDepartmentItemModal').modal('show');
+});
+
+$('#submit-item-btn').click(function(){
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/add-department-item',
+        method: 'POST',
+        dataType: 'json',
+        data: $('#department_item_form').serialize(),
+        success: function (response) {
+            $('#AddDepartmentItemModal').modal('hide');
+            Swal.fire({
+                title: "Success!",
+                text: response.message,
+                icon: "success"
+              });
+            console.log('Success:', response);
+        },
+        error: function (xhr, error) {
+            var response = JSON.parse(xhr.responseText);
+            console.log("XHR:", xhr);
+            console.error('Ajax request failed:'+ response);
+            if (response.errors) {
+                Object.keys(response.errors).forEach(key => {
+                    iziToast.error({
+                        title: 'Error',
+                        message: response.errors[key],
+                        position: 'topRight'
+                    });
+                    console.log("Error key:", key);
+                    console.log("Error message:", response.errors[key]);
+                });
+            }
+        }
+    });
 });
 

@@ -70,3 +70,78 @@
       </div>
   </div>
 </div>
+
+<div class="modal fade" id="InputReasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-3" id="exampleModalLabel">Input Reason</h1>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form id="reason_form">
+              <div class="row">
+                    <textarea class="form-control" placeholder="Reason for Rejection" id="reason" name="reason"></textarea>
+                 
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary btn-sm px-3" id="submit-reason-btn">Submit</button>
+              <button type="button" class="btn btn-secondary btn-sm px-3" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="ReasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-3" id="exampleModalLabel">Reason of rejection</h1>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form id="reason_form">
+              <div class="row">
+                    <textarea disabled class="form-control" placeholder="Reason for Rejection" id="reason_val"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm px-3" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="InputOtpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-3" id="exampleModalLabel">Input OTP</h1>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form id="otp_form">
+              @csrf
+              <div class="row">
+                    <input type="text" class="form-control" placeholder="OTP" id="otp" name="otp">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm px-3" id="submit-otp-btn">Send</button>
+              <button type="button" class="btn btn-secondary btn-sm px-3" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>

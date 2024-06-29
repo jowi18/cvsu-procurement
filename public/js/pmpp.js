@@ -26,6 +26,10 @@ const pmppTable = () =>{
             {
                 dom.getElement().classList.add("table-success");
             }
+            else if (selectedRow.status == "For Approval")
+            {
+                dom.getElement().classList.add("table-info");
+            }
             else
             {
                 dom.getElement().classList.add("table-danger");
@@ -35,9 +39,8 @@ const pmppTable = () =>{
             {title:"NO", field:"no", hozAlign:"center",width:75, vertAlign:"middle"},
             {title:"CREATED BY", field:"prepared_by", hozAlign:"left", vertAlign:"middle"},
             {title:"PROCUREMENT PROJECT", field:"project", hozAlign:"left", vertAlign:"middle"},
-            {title:"FUND SOURCE", field:"fund", hozAlign:"left", vertAlign:"middle"},
-            {title:"ESTIMATED BUDGET", field:"budget", hozAlign:"left", vertAlign:"middle"},
             {title:"DATE CREATED", field:"created_at", hozAlign:"left", vertAlign:"middle"},
+            {title:"YEAR PLAN", field:"year", hozAlign:"left", vertAlign:"middle"},
             {title:"STATUS", field:"status_badge", hozAlign:"left", formatter: "html", vertAlign:"middle"},
             {title:"STATUS TEXT", field:"status", hozAlign:"left", vertAlign:"middle", visible: false},
             {title:"ACTION", field:"action", hozAlign:"left", formatter: "html", vertAlign:"middle"},
@@ -100,6 +103,7 @@ const viewPmppItemTable = (setData) =>{
              {title:"TOTAL", field:"total", hozAlign:"left", vertAlign:"middle", bottomCalc:"sum", topCalcParams:{
                 precision:1,
             }},
+            {title:"ACTION", field:"action", hozAlign:"left", formatter:"html", vertAlign:"middle"},
          
          ]
      });
@@ -181,14 +185,20 @@ $(document).on('click', '.add-item-btn-class', function () {
 
 $('#submit-item-btn').click(function () {
     var id = $('#AddPmppItemModal').attr('data');
-    console.log(id);
+    var item = $('#item-name').val();  
+    var category = $('#item-name option:selected').attr('data-category');
+    var item_description = $('#item-description').val();
+    var quantity = $('#item-quantity').val();
+    var uom = $('#item-name option:selected').attr('data-uom');
+    // alert(item);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: "/submit-pmpp-item/" + id,
             type: 'POST',
-            data: $('#PmppAddItemForm').serialize(),
+            // data: $('#PmppAddItemForm').serialize(),
+            data: {item: item, uom: uom, category: category, quantity: quantity, item_description: item_description},
             dataType: 'json', 
             success: function (response) {
                 console.log('Success:', response);
@@ -296,10 +306,114 @@ $(document).on('click', '#rejected-btn', function () {
     });
 });
 
+
+$(document).on('click', '#forward-btn', function () {
+    id = $(this).attr('data-id');
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Forward it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'forward-pmpp/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Success:', response.item);
+                    getPmppList();
+                    Swal.fire({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success"
+                    });
+                    // $('#edit-item-image').val(response.image);
+                },
+                error: function (xhr, status, errors) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log("errors", response.errors);
+                    console.log("XHR:", xhr);
+                    console.log("Status:", status);
+                }
+            });
+        }
+      });
+});
+
+$(document).on('click', '#review-btn', function () {
+    id = $(this).attr('data-id');
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Pass it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'reviewed-pmpp/' + id,
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                console.log('Success:', response.item);
+                getPmppList();
+                Swal.fire({
+                    title: "Success!",
+                    text: response.message,
+                    icon: "success"
+                });
+                // $('#edit-item-image').val(response.image);
+            },
+            error: function (xhr, status, errors) {
+                var response = JSON.parse(xhr.responseText);
+                console.log("errors", response.errors);
+                console.log("XHR:", xhr);
+                console.log("Status:", status);
+            }
+        });
+        }
+    });
+});
+
 $('#download-btn').click(function (){
     $('#DownloadPmppModal').modal('show');
 });
 $('#download-submit-btn').click(function (){
     var url = 'pmpp-report/' + $('#year').val();
     window.open(url, "_blank");
+});
+
+$(document).on('click','.remove-item', function (){
+    var id = $(this).attr('data-id');
+    // alert(id);
+    $.ajax({
+        url: 'remove-item/' + id,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log('Success:', response.item);
+            getPmppList();
+            Swal.fire({
+                title: "Success!",
+                text: response.message,
+                icon: "success"
+            });
+            $('#AddPmppItemModal').modal('hide');
+            getPmppList();
+            // $('#edit-item-image').val(response.image);
+        },
+        error: function (xhr, status, errors) {
+            var response = JSON.parse(xhr.responseText);
+            console.log("errors", response.errors);
+            console.log("XHR:", xhr);
+            console.log("Status:", status);
+        }
+    });
 });

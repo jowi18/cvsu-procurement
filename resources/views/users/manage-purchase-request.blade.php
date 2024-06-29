@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="border rounded bg-white shadow-sm p-4 mt-4">
+<div class="border rounded bg-white shadow-sm p-4 mt-2">
     <div class="d-flex flex-row-reverse text-right mb-2">
         <div class="col-md-3 text-right">
             <input type="text" class="form-control" id="search" name="search" oninput="searchPr(value)" placeholder="Search">

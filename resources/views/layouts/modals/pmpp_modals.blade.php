@@ -11,40 +11,40 @@
                 <div class="border rounded bg-white shadow-sm p-4 mt-2 position-relative">
                     <form id="PmppAddItemForm">
                         <div class="row">
-                            <div class="col">
+                            {{-- <div class="col">
                                 <select id="item_category" name="item_category" class="form-control">
                                     <option value="" selected>Select Category</option>
                                     @foreach ($category as $value)
                                         <option value="{{ $value->id }}">{{ $value->category }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div class="col">
-                                <select id="item_name" name="item_name" class="form-control">
+                                <select id="item-name" name="item_name" class="form-control">
                                     <option value="" selected>Select Item</option>
                                     @foreach ($item as $value)
-                                        <option value="{{ $value->id }}">{{ $value->item }}</option>
+                                        <option value="{{ $value->id }}" data-category="{{ $value->category }}" data-uom="{{ $value->unit_of_measurement }}">{{ $value->item }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <div class="col">
+                            {{-- <div class="col">
                                 <select id="unit_of_measurement" name="unit_of_measurement" class="form-control">
                                     <option value="" selected>Select Unit Of Measurement</option>
                                     @foreach ($uom as $value)
                                         <option value="{{ $value->id }}">{{ $value->uom }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div class="col">
-                                <input type="number" id="item_quantity" name="item_quantity" class="form-control" placeholder="Item Quantity" aria-label="Last name">
+                                <input type="number" id="item-quantity" name="item_quantity" class="form-control" placeholder="Item Quantity" aria-label="Last name">
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
-                                <input type="text" id="item_description" class="form-control" name="item_description" placeholder="Item Description" aria-label="Item Category">
+                                <input type="text" id="item-description" class="form-control" name="item_description" placeholder="Item Description" aria-label="Item Category">
                             </div>
                         </div>
 

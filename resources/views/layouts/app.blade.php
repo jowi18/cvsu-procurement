@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>{{ config('app.name', 'Laravel') }}</title>  
+   
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,15 +17,15 @@
     <link rel="stylesheet" href="{{ asset('tabulator-master/dist/css/tabulator_bootstrap5.min.css') }}">
      <!-- Include iziToast CSS -->
     <link rel="stylesheet" href="{{ asset('iziToast-master/dist/css/iziToast.min.css') }}">
+    <!-- JQUERY -->
+    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
     <!-- Include iziToast JavaScript -->
     <script src="{{ asset('iziToast-master/dist/js/iziToast.min.js') }}"></script>
       <!-- Sweet Alert 2 JavaScript -->
     <script src="{{ asset('js/sweetAlert2/sweetalert2@11') }}"></script>
 
     @yield('styles')
-    <!-- JQUERY -->
-    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
-    
+    <script src="{{ asset('js/notification.js') }}"></script>
     <!-- Tabulator JS Scripts -->
     <script src="{{ asset('tabulator-master/dist/js/tabulator.min.js') }}"></script>
     <!-- Tootl tip JS Scripts -->
@@ -48,9 +48,9 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item dropdown show">
-                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
+                <a class="nav-link" data-toggle="dropdown" href="#" onclick="showNotification()" aria-expanded="true">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-danger navbar-badge unread-count">2</span>
+                <span class="badge badge-danger navbar-badge unread-count"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right show" id="notif" style="left: inherit; right: 0px; max-height: 300px; overflow-y: auto">
                 </div>
@@ -58,14 +58,15 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                    {{ Auth::user()->position_dtls->position }}
+                    {{ Auth::user()->position_dtls->position.' - '.Auth::user()->department_dtls->department}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0px;">
-                    {{-- <a href="{{ route('profile.show') }}" class="dropdown-item">
+                    <a href="{{ route('profile.show') }}" class="dropdown-item">
                         <i class="mr-2 fas fa-file"></i>
                         {{ __('My profile') }}
                     </a>
-                    <div class="dropdown-divider"></div> --}}
+                    
+                    {{-- <div class="dropdown-divider"></div> --}}
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <a href="{{ route('logout') }}" class="dropdown-item"

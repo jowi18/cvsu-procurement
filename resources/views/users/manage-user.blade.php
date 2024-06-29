@@ -3,9 +3,12 @@
 @section('content')
 
     <div class="border rounded bg-white shadow-sm p-4 mt-2 position-relative">
+        <button type="button" class="btn btn-sm btn-outline-info" id="add_department">
+            ADD DEPARTMENT
+        </button>
         <div class="row mt-3">
             <div class="col">
-                <form id="add_user_form">
+                <form id="add_user_form" enctype="multipart/form-data">
                     @csrf
                     <select class="form-control" id="department" name="department">
                         <option value="" selected>Select Department</option>
@@ -34,6 +37,9 @@
                         <option value="{{ $item->id }}">{{ $item->position }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="col">
+                <input type="file" id="image_signature" name="image_signature" class="form-control" aria-label="Procurement Project">
             </div>
             {{-- 
             <div class="col">

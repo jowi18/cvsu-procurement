@@ -13,13 +13,16 @@ class PurchaseRequestHeader extends Model
     protected $fillable = [
         'created_by',
         'department_id',
-        'approved_by',
+        'supplies_approval',
+        'dean_approval',
+        'president_approval',
         'for_approval',
         'rejected_by',
         'purpose',
         'signature',
         'pr_code',
-        'status'
+        'status',
+        'is_view'
     ];
 
     public function pr_dtls(){
@@ -29,8 +32,16 @@ class PurchaseRequestHeader extends Model
         return $this->belongsTo(User::class,'created_by');
     }
 
-    public function approved_by_dtls(){
-        return $this->belongsTo(User::class,'approved_by');
+    public function supplies_approval_dtls(){
+        return $this->belongsTo(User::class,'supplies_approval');
+    }
+
+    public function dean_approval_dtls(){
+        return $this->belongsTo(User::class,'dean_approval');
+    }
+
+    public function president_approval_dtls(){
+        return $this->belongsTo(User::class,'president_approval');
     }
 
     public function rejected_by_dtls(){
@@ -48,5 +59,10 @@ class PurchaseRequestHeader extends Model
     public function status_dtls(){
         return $this->belongsTo(Status::class,'status');
     }
+
+    public function pr_attachment_dtls(){
+        return $this->hasMany(ManageApprovePrModel::class, 'pr_hdr_id');
+    }
+
 
 }

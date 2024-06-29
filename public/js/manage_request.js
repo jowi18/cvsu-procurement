@@ -1,7 +1,6 @@
 $(document).ready(function(){
     manageRequestTable(); 
     getRequestList();
-    //data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View Request"
   
 });
 
@@ -33,7 +32,7 @@ const manageRequestTable = () =>{
         columns:[
             {title:"NO", field:"no", hozAlign:"center",width:75, vertAlign:"middle"},
             {title:"PR CODE", field:"pr_code", hozAlign:"left", vertAlign:"middle"},
-            {title:"CREATED BY", field:"created_by", hozAlign:"left", vertAlign:"middle"},
+            {title:"CREATED BY", field:"created_by", hozAlign:"left", formatter:"html", vertAlign:"middle"},
             {title:"DEPARTMENT", field:"department", hozAlign:"left", vertAlign:"middle"},
             {title:"STATUS", field:"status_badge", hozAlign:"left", formatter:"html", vertAlign:"middle"},
             {title:"STATUS TEXT", field:"status", hozAlign:"left", vertAlign:"middle", visible: false},
@@ -107,6 +106,7 @@ getRequestList = () => {
         success: function (response) { 
             console.log(response);
             purchaseRequest.setData(response);
+            // $('[data-toggle="tooltip"]').tooltip()
         },
     });
 };
@@ -251,12 +251,39 @@ $(document).on('click', '#update-request-btn', function (){
 }); 
 $(document).on('click', '#pdf-btn', function () {
     var id = $(this).attr('data-item-id');
+
     var url = 'purchase-report/' + id ;
     window.open(url, "_blank");
 });
+// $(document).on('click', '#approve-request-btn', function () {
+//     $('#InputOtpModal').modal('show');
+//     var id = $(this).attr('data-item-id');
+//     $('#InputOtpModal').attr('data-id', id);
+//     $.ajax({
+//         url:'generate-otp/' + id,
+//         method: 'GET',
+//         dataType: 'json',
+//         success: function (response) {
+//             console.log('Success:', response);
+//             iziToast.success({
+//                 title: 'Success!',
+//                 message: response.message,
+//                 position: 'topRight'
+//             });    
+        
+//         },
+//         error: function (xhr, status, errors) {
+//             var response = JSON.parse(xhr.responseText);
+//             console.log("errors", response.errors);
+//             console.log("XHR:", xhr);
+//             console.log("Status:", status);
+//         }
+//     })
+// });
 
 $(document).on('click', '#approve-request-btn', function () {
-    id = $(this).attr('data-item-id');
+    // id = $('#InputOtpModal').attr('data-id');
+    let id = $(this).attr('data-item-id');
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -268,7 +295,60 @@ $(document).on('click', '#approve-request-btn', function () {
       }).then((result) => {
         if (result.isConfirmed) {
           $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: 'approve-request/' + id,
+            method: 'POST',
+            data: $('#otp_form').serialize(),
+            dataType: 'json',
+            success: function (response) {
+                $('#InputOtpModal').modal('hide');
+                console.log('Success:', response.item);
+                Swal.fire({
+                    title: "Success!",
+                    text: response.message,
+                    icon: "success"
+                });
+                getRequestList();
+               
+            },
+            error: function (xhr, status, errors) {
+                var response = JSON.parse(xhr.responseText);
+                console.log("errors", response.errors);
+                console.log("XHR:", xhr);
+                console.log("Status:", status);
+                if (response.errors) {
+                    Object.keys(response.errors).forEach(key => {
+                        iziToast.error({
+                            title: 'Error',
+                            message: response.errors[key],
+                            position: 'topRight'
+                        });
+                        console.log("Error key:", key);
+                        console.log("Error message:", response.errors[key]);
+                    });
+                }
+            }
+        });
+        }
+    });
+});
+
+$(document).on('click', '#forward-btn', function () {
+    id = $(this).attr('data-item-id');
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Forward it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'forward-request/' + id,
             method: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -294,7 +374,14 @@ $(document).on('click', '#approve-request-btn', function () {
 });
 
 $(document).on('click', '#reject-request-btn', function () {
-    id = $(this).attr('data-item-id');
+    var id = $(this).attr('data-item-id');
+    $('#InputReasonModal').modal('show');
+    
+    $('#InputReasonModal').attr('data-id', id);
+});
+
+$('#submit-reason-btn').click(function () {
+    var id = $('#InputReasonModal').attr('data-id');
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -306,25 +393,39 @@ $(document).on('click', '#reject-request-btn', function () {
       }).then((result) => {
         if (result.isConfirmed) {
           $.ajax({
+            headers : {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }, 
             url: 'reject-request/' + id,
-            method: 'GET',
+            method: 'POST',
+            data: $('#reason_form').serialize(),
             dataType: 'json',
             success: function (response) {
                 console.log('Success:', response.item);
-                
                 Swal.fire({
                     title: "Success!",
                     text: response.message,
                     icon: "success"
                 });
                 getRequestList();
-                // $('#edit-item-image').val(response.image);
+                $('#ReasonModal').modal('hide');
             },
             error: function (xhr, status, errors) {
                 var response = JSON.parse(xhr.responseText);
                 console.log("errors", response.errors);
                 console.log("XHR:", xhr);
                 console.log("Status:", status);
+                if (response.errors) {
+                    Object.keys(response.errors).forEach(key => {
+                        iziToast.error({
+                            title: 'Error',
+                            message: response.errors[key],
+                            position: 'topRight'
+                        });
+                        console.log("Error key:", key);
+                        console.log("Error message:", response.errors[key]);
+                    });
+                }
             }
         });
         }
@@ -378,4 +479,50 @@ $(document).on('click', '#submit-item-btn', function () {
     });
 
 });
+
+$(document).on('click', '#reason-modal', function () {
+    var id = $(this).attr('data-item-id');
+    $('#ReasonModal').modal('show');
+
+    $.ajax({
+        url:'view-reason/' + id,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log('Success:', response);
+            $('#reason_val').val(response.reason);
+        },
+        error: function (xhr, status, errors) {
+            var response = JSON.parse(xhr.responseText);
+            console.log("errors", response.errors);
+            console.log("XHR:", xhr);
+            console.log("Status:", status);
+        }
+    });
+});
+
+$(document).on('click', '#follow-up-btn', function () {
+    let id  = $(this).attr('data-item-id');
+    $.ajax({
+        url: 'follow-up-request/' + id,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log('Success:', response);
+            Swal.fire({
+                title: "Success!",
+                text: response.message,
+                icon: "success"
+            });
+        },
+        error: function (xhr, status, errors) {
+            var response = JSON.parse(xhr.responseText);
+            console.log("errors", response.errors);
+            console.log("XHR:", xhr);
+            console.log("Status:", status);
+        }
+    });
+});
+
+
 

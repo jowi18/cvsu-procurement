@@ -8,8 +8,11 @@ use App\Http\Requests\ProfileUpdateRequest;
 class ProfileController extends Controller
 {
     public function show()
-    {
-        return view('auth.profile');
+    {   
+        $title = "Create PMPP";
+        $secondtitle = "Create PMPP";
+        $thirdtitle = "Request";
+        return view('auth.profile', compact(['title', 'secondtitle', 'thirdtitle']));
     }
 
     public function update(ProfileUpdateRequest $request)
