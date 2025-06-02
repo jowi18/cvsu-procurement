@@ -23,13 +23,7 @@
 </style>
 </head>
 <body>
-    {{-- <div class="row">
-        <div class="col-lg-12" style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
-            <img src="{{ public_path('storage/user_images/cvsu-icon1.png') }}" alt="User Image" style="width: 100px; height: 100px;">
-            <p style="margin: 0;">CAVITE STATE UNIVERSITY</p>
-        </div>
-    </div> --}}
-  
+
     <table class="tg">
         <thead>
             <tr class="borderless">

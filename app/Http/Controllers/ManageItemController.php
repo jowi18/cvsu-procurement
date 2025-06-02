@@ -35,7 +35,6 @@ class ManageItemController extends Controller
     }
 
    
-
     public function addItem(Request $request){
         try{
             $validatedData = $request->validate([
@@ -86,7 +85,6 @@ class ManageItemController extends Controller
         }
 
         return response()->json($response, 200);
-
     }
 
     public function deleteItem($id){
@@ -118,7 +116,6 @@ class ManageItemController extends Controller
 
     public function updateItem($id, Request $request){ 
         try{
-
             $validatedData = $request->validate([
                 'update_item' => 'required|unique:item,item,' . $id . ',id,deleted_at,NULL',
                 'update_category' => 'required',

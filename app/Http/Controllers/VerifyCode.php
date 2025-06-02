@@ -16,7 +16,7 @@ class VerifyCode extends Controller
         return view('users.verify-code', compact('title', 'secondtitle', 'thirdtitle'));
     }
 
-    public function verifyCode(Request $request){
+    public function verifyCode(Request $request){   
 
         try {
             $request->validate([
